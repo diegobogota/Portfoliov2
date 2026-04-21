@@ -14,7 +14,8 @@ import {
   Smartphone,
   Menu,
   X,
-  Languages
+  Languages,
+  MessageCircle
 } from 'lucide-react';
 import { translations } from './translations';
 
@@ -307,21 +308,33 @@ export default function App() {
             <p className="font-mono text-xl mb-12 opacity-70">
               {t.footer.seniority}
             </p>
-            <a 
-              href="mailto:diegolnrs@gmail.com" 
-              className="brutal-btn bg-brutal-yellow text-black text-2xl md:text-4xl py-6 px-12 inline-flex items-center gap-4"
-            >
-              {lang === 'en' ? 'SAY HELLO' : 'DI HOLA'}
-              <ArrowRight size={32} />
-            </a>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <a 
+                href="mailto:diegolnrs@gmail.com" 
+                className="brutal-btn bg-brutal-yellow text-black text-2xl md:text-4xl py-6 px-12 inline-flex items-center gap-4 w-full md:w-auto justify-center"
+              >
+                {lang === 'en' ? 'SAY HELLO' : 'DI HOLA'}
+                <ArrowRight size={32} />
+              </a>
+              <a 
+                href="https://wa.me/5492236565296" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn bg-brutal-green text-black text-2xl md:text-4xl py-6 px-12 inline-flex items-center gap-4 w-full md:w-auto justify-center"
+              >
+                {t.footer.whatsapp}
+                <MessageCircle size={32} />
+              </a>
+            </div>
           </motion.div>
           
           <div className="mt-24 pt-12 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-sm opacity-50">
             <p>© 2026 DIEGO BOGOTÁ. ALL RIGHTS RESERVED.</p>
-            <div className="flex gap-8 uppercase">
-              <a href="#" className="hover:text-brutal-yellow">LinkedIn</a>
-              <a href="#" className="hover:text-brutal-yellow">Behance</a>
-              <a href="#" className="hover:text-brutal-yellow">Dribbble</a>
+            <div className="flex flex-wrap gap-8 uppercase justify-center md:justify-end">
+              <a href="https://www.linkedin.com/in/diegobogota/" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">LinkedIn</a>
+              <a href="https://www.behance.net/diegobogota" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">Behance</a>
+              <a href="https://dribbble.com/diegobogota" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">Dribbble</a>
+              <a href="https://vimeo.com/diegobogota" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">Vimeo</a>
             </div>
           </div>
         </footer>

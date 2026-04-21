@@ -15,10 +15,10 @@ export const translations = {
     coreExpertise: {
       title: "Core Expertise",
       items: [
+        { title: "AI-Driven Design", desc: "Accelerating design processes from weeks to days." },
         { title: "UX/UI Design", desc: "Senior level interface and experience design." },
         { title: "Product Design", desc: "End-to-end: discovery → prototyping → user testing." },
         { title: "Motion Design", desc: "Interactive animations that elevate UX and usability." },
-        { title: "AI-Driven Design", desc: "Accelerating design processes from weeks to days." },
         { title: "Human-Centered", desc: "Data-driven approach focused on the user." },
         { title: "Digital Branding", desc: "Consistent and impactful brand experiences." },
       ],
@@ -57,6 +57,7 @@ export const translations = {
     footer: {
       seniority: "Senior (11+ years total / 6+ years UX focus)",
       cta: "Let's build something bold.",
+      whatsapp: "Chat on WhatsApp",
     },
   },
   es: {
@@ -75,10 +76,10 @@ export const translations = {
     coreExpertise: {
       title: "Core Expertise",
       items: [
+        { title: "Diseño con IA", desc: "Acelerando procesos de diseño de semanas a días." },
         { title: "Diseño UX/UI", desc: "Diseño de interfaces y experiencias de nivel Senior." },
         { title: "Diseño de Producto", desc: "End-to-end: discovery → prototipado → testing." },
         { title: "Diseño de Motion", desc: "Animaciones interactivas que mejoran la UX." },
-        { title: "Diseño con IA", desc: "Acelerando procesos de diseño de semanas a días." },
         { title: "Centrado en Humanos", desc: "Enfoque basado en datos y centrado en el usuario." },
         { title: "Branding Digital", desc: "Experiencias de marca consistentes e impactantes." },
       ],
@@ -117,6 +118,7 @@ export const translations = {
     footer: {
       seniority: "Senior (11+ años total / 6+ años en UX)",
       cta: "Construyamos algo audaz.",
+      whatsapp: "Escríbeme por WhatsApp",
     },
   },
 };
