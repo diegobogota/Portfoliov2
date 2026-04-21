@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useInView, useMotionValue, useTransform, animate } from 'motion/react';
 import { 
   Globe, 
   Zap, 
@@ -15,9 +15,32 @@ import {
   Menu,
   X,
   Languages,
-  MessageCircle
+  MessageCircle,
+  Github,
+  Award,
+  BarChart3,
+  CheckCircle2
 } from 'lucide-react';
 import { translations } from './translations';
+
+function Counter({ value, prefix = "", suffix = "" }: { value: number, prefix?: string, suffix?: string }) {
+  const [displayValue, setDisplayValue] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, value, { 
+        duration: 2, 
+        ease: "easeOut",
+        onUpdate: (latest) => setDisplayValue(Math.round(latest))
+      });
+      return controls.stop;
+    }
+  }, [isInView, value]);
+
+  return <span ref={ref}>{prefix}{displayValue.toLocaleString()}{suffix}</span>;
+}
 
 export default function App() {
   const [lang, setLang] = useState<'en' | 'es'>('en');
@@ -41,6 +64,18 @@ export default function App() {
     visible: { y: 0, opacity: 1 }
   };
 
+  const services = [
+    "AI DESIGN",
+    "MOTION GRAPHICS",
+    "BRAND IDENTITY",
+    "UX RESEARCH",
+    "PRODUCT DESIGN",
+    "GENERATIVE AI",
+    "WORDPRESS • DIVI",
+    "DESIGN SYSTEMS",
+    "DIGITAL TRANSFORMATION"
+  ];
+
   return (
     <div className="min-h-screen bg-white selection:bg-brutal-yellow">
       {/* Navigation */}
@@ -51,6 +86,7 @@ export default function App() {
         
         <div className="hidden md:flex items-center gap-8 font-display font-bold uppercase text-sm">
           <a href="#expertise" className="hover:underline">{t.nav.expertise}</a>
+          <a href="#process" className="hover:underline">{t.process.title}</a>
           <a href="#specialization" className="hover:underline">{t.nav.specialization}</a>
           <a href="#tools" className="hover:underline">{t.nav.tools}</a>
           <button 
@@ -82,6 +118,7 @@ export default function App() {
             className="fixed inset-0 z-40 bg-white pt-24 px-6 flex flex-col gap-8 font-display font-black text-4xl uppercase"
           >
             <a href="#expertise" onClick={() => setIsMenuOpen(false)}>{t.nav.expertise}</a>
+            <a href="#process" onClick={() => setIsMenuOpen(false)}>{t.process.title}</a>
             <a href="#specialization" onClick={() => setIsMenuOpen(false)}>{t.nav.specialization}</a>
             <a href="#tools" onClick={() => setIsMenuOpen(false)}>{t.nav.tools}</a>
           </motion.div>
@@ -97,8 +134,8 @@ export default function App() {
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <h1 className="font-display font-black text-6xl md:text-9xl uppercase leading-[0.85] tracking-tighter mb-8">
-                Diego <br /> Bogotá
+              <h1 className="font-display font-black text-4xl md:text-7xl uppercase leading-[0.95] tracking-tighter mb-8 max-w-5xl">
+                {t.hero.title}
               </h1>
             </motion.div>
             
@@ -108,9 +145,6 @@ export default function App() {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.3 }}
               >
-                <p className="font-display font-bold text-2xl md:text-4xl uppercase leading-tight mb-6">
-                  {t.hero.title}
-                </p>
                 <p className="text-xl md:text-2xl font-medium max-w-xl">
                   {t.hero.subtitle}
                 </p>
@@ -128,6 +162,9 @@ export default function App() {
                 <div className="brutal-card bg-brutal-pink inline-block -rotate-2">
                   <p className="font-mono font-bold uppercase">11+ YEARS EXP</p>
                 </div>
+                <div className="brutal-card bg-brutal-green inline-block rotate-1">
+                  <p className="font-mono font-bold uppercase">41+ PROJECTS COMPLETED</p>
+                </div>
               </motion.div>
             </div>
           </div>
@@ -137,12 +174,89 @@ export default function App() {
         <div className="bg-black text-white py-4 border-b-4 border-black overflow-hidden whitespace-nowrap flex">
           <div className="animate-marquee flex gap-8 items-center">
             {[...Array(10)].map((_, i) => (
-              <span key={i} className="font-display font-black text-4xl uppercase flex items-center gap-8">
-                {t.hero.title} <Zap className="text-brutal-yellow fill-brutal-yellow" />
+              <span key={i} className="font-display font-black text-3xl md:text-4xl uppercase flex items-center gap-8">
+                {services.map((service, si) => (
+                  <span key={si} className="flex items-center gap-8">
+                    {service} <Zap className="text-brutal-yellow fill-brutal-yellow" />
+                  </span>
+                ))}
               </span>
             ))}
           </div>
         </div>
+
+        {/* Real-world Impact - Swipeable Cards */}
+        <section id="impact" className="px-6 py-20 bg-brutal-blue border-b-4 border-black text-white overflow-hidden">
+          <div className="max-w-7xl mx-auto">
+            <div className="mb-16">
+              <h2 className="font-display font-black text-5xl md:text-8xl uppercase tracking-tighter leading-none mb-4 italic">
+                {t.impact.title}
+              </h2>
+              <p className="font-display font-bold text-2xl md:text-3xl uppercase mb-4 text-brutal-yellow">
+                {t.impact.subtitle}
+              </p>
+              <p className="max-w-2xl text-xl opacity-90">
+                {t.impact.description}
+              </p>
+            </div>
+
+            <motion.div 
+              className="flex gap-8 cursor-grab active:cursor-grabbing"
+              drag="x"
+              dragConstraints={{ right: 0, left: -1400 }}
+              whileTap={{ cursor: "grabbing" }}
+            >
+              {t.impact.cards.map((card, idx) => {
+                const colors = ['bg-white text-black', 'bg-brutal-yellow text-black', 'bg-brutal-pink text-black', 'bg-brutal-green text-black'];
+                return (
+                  <div 
+                    key={idx}
+                    className={`min-w-[320px] md:min-w-[450px] brutal-card ${colors[idx % colors.length]} flex flex-col justify-between h-[500px] select-none`}
+                  >
+                    <div>
+                      <div className="flex justify-between items-start mb-6">
+                        <span className="font-mono text-xs border-2 border-current px-2 py-1 uppercase font-bold">
+                          {card.tag}
+                        </span>
+                        <BarChart3 size={24} />
+                      </div>
+                      <h3 className="font-display font-black text-3xl uppercase mb-8 leading-tight">
+                        {card.title}
+                      </h3>
+                      
+                      <div className="space-y-6">
+                        {card.metrics.map((m, mi) => (
+                          <div key={mi}>
+                            <div className="text-4xl md:text-5xl font-black font-display mb-1 highlight-text">
+                              <Counter value={m.value} prefix={m.prefix} suffix={m.suffix} />
+                            </div>
+                            <p className="font-mono text-sm uppercase font-bold opacity-70">{m.label}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div className="pt-6 border-t-2 border-current mt-auto">
+                      <p className="font-medium text-sm italic">{card.footer}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+            
+            <div className="mt-12 flex items-center gap-4 text-brutal-yellow">
+              <span className="font-mono text-sm uppercase font-bold">Swipe to explore impact</span>
+              <div className="h-1 w-24 bg-white/20 relative">
+                <motion.div 
+                  className="absolute inset-0 bg-brutal-yellow"
+                  animate={{ left: ["0%", "100%", "0%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                  style={{ width: "20%" }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Core Expertise */}
         <section id="expertise" className="px-6 py-20 bg-white border-b-4 border-black">
@@ -159,7 +273,7 @@ export default function App() {
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
             >
               {t.coreExpertise.items.map((item, idx) => {
-                const Icons = [Palette, Layers, Wind, Cpu, Users, Globe];
+                const Icons = [Cpu, Palette, Layers, Wind, Users, Globe];
                 const Icon = Icons[idx];
                 const colors = ['bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue', 'bg-white', 'bg-brutal-yellow'];
                 return (
@@ -177,6 +291,45 @@ export default function App() {
                 );
               })}
             </motion.div>
+          </div>
+        </section>
+
+        {/* How I Work (Process) */}
+        <section id="process" className="px-6 py-20 bg-black text-white border-b-4 border-black">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+              <div>
+                <span className="font-mono text-sm uppercase tracking-widest text-brutal-yellow mb-4 block">{t.process.title}</span>
+                <h2 className="font-display font-black text-5xl md:text-8xl uppercase mb-8 tracking-tighter leading-tight italic">
+                  {t.process.headline}
+                </h2>
+                <div className="brutal-card bg-white text-black rotate-1">
+                  <p className="text-xl leading-relaxed">
+                    {t.process.subtext}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="space-y-4">
+                {t.process.steps.map((step, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ x: 50, opacity: 0 }}
+                    whileInView={{ x: 0, opacity: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="brutal-card bg-white text-black group hover:bg-brutal-yellow transition-colors duration-300"
+                  >
+                    <div className="flex gap-6 items-start">
+                      <span className="font-display font-black text-4xl text-brutal-pink group-hover:text-black transition-colors">{step.num}</span>
+                      <div>
+                        <h3 className="font-display font-black text-2xl uppercase mb-2">{step.title}</h3>
+                        <p className="text-sm opacity-80 group-hover:opacity-100">{step.desc}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
@@ -225,31 +378,39 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              <div className="brutal-card bg-white">
-                <Figma size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">{t.tools.figma}</h4>
-              </div>
-              <div className="brutal-card bg-brutal-yellow">
-                <Zap size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">{t.tools.ae}</h4>
-              </div>
-              <div className="brutal-card bg-white">
-                <Palette size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">{t.tools.suite}</h4>
-              </div>
-              <div className="brutal-card bg-brutal-blue text-white">
-                <Smartphone size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">{t.tools.motion}</h4>
-              </div>
-              <div className="brutal-card bg-white lg:col-span-2">
-                <Code size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">{t.tools.dev}</h4>
-              </div>
-              <div className="brutal-card bg-brutal-pink lg:col-span-2">
-                <Users size={48} className="mb-4" />
-                <h4 className="font-display font-black text-xl uppercase">Scrum / Agile</h4>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {t.tools.items.map((item, idx) => {
+                const getIcon = (name: string) => {
+                  const lowerName = name.toLowerCase();
+                  if (lowerName.includes('figma')) return <Figma size={48} className="mb-4" />;
+                  if (lowerName.includes('ae') || lowerName.includes('after effects')) return <Zap size={48} className="mb-4" />;
+                  if (lowerName.includes('github')) return <Github size={48} className="mb-4" />;
+                  if (lowerName.includes('html') || lowerName.includes('code')) return <Code size={48} className="mb-4" />;
+                  if (lowerName.includes('agile') || lowerName.includes('scrum')) return <Users size={48} className="mb-4" />;
+                  if (lowerName.includes('vercel')) return <Wind size={48} className="mb-4" />;
+                  if (lowerName.includes('google') || lowerName.includes('ai') || lowerName.includes('vertex') || lowerName.includes('gemini') || lowerName.includes('notebooklm')) return <Cpu size={48} className="mb-4" />;
+                  return <Layers size={48} className="mb-4" />;
+                };
+
+                const getBgColor = (idx: number) => {
+                  const colors = ['bg-white', 'bg-brutal-yellow', 'bg-brutal-pink', 'bg-brutal-green', 'bg-brutal-blue'];
+                  return colors[idx % colors.length];
+                };
+
+                return (
+                  <motion.div 
+                    key={idx}
+                    variants={itemVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                    className={`brutal-card ${getBgColor(idx)} ${idx >= t.tools.items.length - 2 && idx % 2 === 0 ? 'lg:col-span-2' : ''}`}
+                  >
+                    {getIcon(item)}
+                    <h4 className="font-display font-black text-xl uppercase leading-tight">{item}</h4>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -262,6 +423,13 @@ export default function App() {
                 {t.background.title}
               </h2>
               <div className="flex flex-col gap-6">
+                <div className="brutal-card bg-white">
+                  <div className="mb-4 p-2 border-4 border-black bg-brutal-yellow inline-block">
+                    <Award size={32} />
+                  </div>
+                  <h4 className="font-display font-black text-xl uppercase mb-2">UFLO University</h4>
+                  <p>{t.background.uflo}</p>
+                </div>
                 <div className="brutal-card bg-white">
                   <h4 className="font-display font-black text-xl uppercase mb-2">Fine Arts</h4>
                   <p>{t.background.fineArts}</p>
