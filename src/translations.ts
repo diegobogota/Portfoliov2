@@ -102,7 +102,7 @@ export const translations = {
         "After Effects Level Expert + Lottie",
         "HTML5 / CSS3 (Solid base)",
         "Scrum / Agile",
-        "Figma (Primary)"
+        "Figma & Adobe Suite"
       ]
     },
     background: {
@@ -230,7 +230,7 @@ export const translations = {
         "After Effects Nivel Experto + Lottie",
         "HTML5 / CSS3 (Base sólida)",
         "Scrum / Agile",
-        "Figma (Principal)"
+        "Figma y la Suite de Adobe"
       ]
     },
     background: {
