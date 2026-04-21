@@ -494,10 +494,23 @@ export default function App() {
                 <MessageCircle size={32} />
               </a>
             </div>
+            <div className="mt-8 flex justify-center">
+              <a 
+                href="https://diegobogota.com/" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="brutal-btn bg-brutal-blue text-white text-2xl md:text-3xl py-4 px-10 inline-flex items-center gap-4 w-full md:w-auto justify-center"
+              >
+                {t.footer.portfolio}
+                <Globe size={28} />
+              </a>
+            </div>
           </motion.div>
           
           <div className="mt-24 pt-12 border-t border-white/20 flex flex-col md:flex-row justify-between items-center gap-8 font-mono text-sm opacity-50">
-            <p>© 2026 DIEGO BOGOTÁ. ALL RIGHTS RESERVED.</p>
+            <p>
+              {t.footer.madeWith} ❤️🧠🙌 {t.footer.by} <a href="https://diegobogota.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-brutal-yellow transition-colors">Diego Bogotá</a> {t.footer.helpOf} <a href="https://aistudio.google.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-brutal-yellow transition-colors">Google AI Studio</a>
+            </p>
             <div className="flex flex-wrap gap-8 uppercase justify-center md:justify-end">
               <a href="https://www.linkedin.com/in/diegobogota/" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">LinkedIn</a>
               <a href="https://www.behance.net/diegobogota" target="_blank" rel="noopener noreferrer" className="hover:text-brutal-yellow transition-colors">Behance</a>

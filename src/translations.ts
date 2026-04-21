@@ -121,6 +121,10 @@ export const translations = {
       seniority: "Senior (11+ years total / 6+ years UX focus)",
       cta: "Let's build something bold.",
       whatsapp: "Chat on WhatsApp",
+      portfolio: "VIEW PORTFOLIO & PROJECTS",
+      madeWith: "made with",
+      by: "by",
+      helpOf: "and the help of"
     },
   },
   es: {
@@ -245,6 +249,10 @@ export const translations = {
       seniority: "Senior (11+ años total / 6+ años en UX)",
       cta: "Construyamos algo audaz.",
       whatsapp: "Escríbeme por WhatsApp",
+      portfolio: "VER PORTFOLIO Y MÁS PROYECTOS",
+      madeWith: "hecho con",
+      by: "por",
+      helpOf: "y la ayuda de"
     },
   },
 };
